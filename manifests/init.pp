@@ -55,7 +55,7 @@ class jirabackup (
     source => "puppet:///modules/jirabackup/jira-backup",
   }
 
-  file { '/etc/jira-backup.conf'
+  file { '/etc/jira-backup.conf':
     ensure  => present,
     group   => 'root',
     owner   => 'root',
