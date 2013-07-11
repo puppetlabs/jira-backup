@@ -1,3 +1,8 @@
 name 'jirabackup'
 version '0.0.1'
 source 'https://github.com/puppetlabs/jira-backup'
+author 'Puppet Labs'
+license 'Apache License 2.0'
+summary 'Puppet Labs Jira Backup Module'
+description 'Jira Backup Module'
+project_page 'https://github.com/puppetlabs/jira-backup'

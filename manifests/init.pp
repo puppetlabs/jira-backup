@@ -47,8 +47,12 @@ class jirabackup (
   $backup_dir       = '/var/atlassian/backups/jira',
   $attachments_path = '/var/atlassian/application-data/jira/data/attachments',
 ){
-  package { 'jira-backup':
-    ensure => latest,
+  file { '/usr/local/bin/jira-backup':
+    ensure => present,
+    group  => 'root',
+    owner  => 'root',
+    mode   => '0755',
+    source => "puppet:///modules/jirabackup/jira-backup",
   }
 
   file { '/etc/jira-backup.conf'
