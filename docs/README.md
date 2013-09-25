@@ -5,7 +5,7 @@ A simple shell script to backup Jira instances according to Atlassian best pract
 ## Features
 
  * Backup Jira attachments
- * Backup Jira database using mysqldump
+ * Backup Jira database using pg_dump
 
 ## Configuration
 

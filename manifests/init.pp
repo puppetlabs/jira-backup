@@ -5,19 +5,19 @@
 # Parameters:
 # 
 #  db_host: (default '')
-#  Set the mysql database host to connect to
+#  Set the postgres database host to connect to
 #
 #  db_pass: (default '')
-#  Set the mysql database password
+#  Set the postgres database password
 #
 #  db_user: (default 'jira')
-#  Set the mysql database user
+#  Set the postgres database user
 #
 #  db_name: (default 'jira')
-#  Set the mysql database name
+#  Set the postgres database name
 #
 #  backup_dir: (default '/var/atlassian/backups/jira')
-#  Set the target backup directory for Jira attachments and mysql dumps
+#  Set the target backup directory for Jira attachments and postgres dumps
 #
 #  attachments_path: (default '/var/atlassian/application-data/jira/data/attachments')
 #  Set the path to the Jira attachments
@@ -31,7 +31,7 @@
 # Sample Usage:
 #
 #   class { 'jirabackup':
-#     db_host          => 'mysql.example.com',
+#     db_host          => 'postgres.example.com',
 #     db_pass          => 'database password',
 #     db_user          => 'jira',
 #     db_name          => 'jira',
@@ -60,6 +60,14 @@ class jirabackup (
     group   => 'root',
     owner   => 'root',
     mode    => '0600',
-    content => template("jirabackup/jira-backup.conf.erb"),
+    content => template('jirabackup/jira-backup.conf.erb'),
+  }
+
+  file { '/root/.pgpass':
+    ensure  => present,
+    group   => 'root',
+    owner   => 'root',
+    mode    => '0600',
+    content => template('jirabackup/pgpass.erb'),
   }
 }
