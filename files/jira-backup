@@ -24,34 +24,38 @@ function setup() {
 }
 
 function remove_old_files() {
-    if [ -n "${KEEP_DAYS}" ] then
-        find $0 -mtime +${KEEP_DAYS} -exec rm {} \;
+    if [ -n "${KEEP_DAYS}" ]; then
+        find "$1" -mtime +${KEEP_DAYS} -delete
     fi
 }
 
 function remove_old_attachment_backups() {
-    echo "Removing old Jira attachment backups"	
-    remove_old_files ${ATTACHMENT_BACKUP_REMOVE}
+    if [ -z "${ATTACHMENTS_PATH}" ]; then
+        echo "Removing old Jira attachment backups"
+        remove_old_files "$ATTACHMENT_BACKUP_REMOVE"
+    fi
 }
 
 function remove_old_database_dumps() {
-    echo "Removing old Jira database dumps"
-    remove_old_files {$DATABASE_DUMP_REMOVE}
+    if [ -z "$DB_NAME" ]; then
+        echo "Removing old Jira database dumps"
+        remove_old_files "$DATABASE_DUMP_REMOVE"
+    fi
 }
 
 
 function backup_attachments() {
-    if [ -z "${ATTACHMENTS_PATH}" ] then
+    if [ -z "${ATTACHMENTS_PATH}" ]; then
         echo "Skipping Jira attachments backup"
     else
-	 echo "Backing up Jira attachments"
-         /bin/tar -cpf ${ATTACHMENT_BACKUP_OUTPUT} ${ATTACHMENTS_PATH}
-         echo "Created ${ATTACHMENT_BACKUP_OUTPUT}"
+	    echo "Backing up Jira attachments"
+        /bin/tar -cpf ${ATTACHMENT_BACKUP_OUTPUT} ${ATTACHMENTS_PATH}
+        echo "Created ${ATTACHMENT_BACKUP_OUTPUT}"
     fi
 }
 
 function dump_database() {
-    if [ -z "$DB_NAME" ] then
+    if [ -z "$DB_NAME" ]; then
         echo "Skiping Jira database dump."
     else
         echo "Dumping Jira database"
