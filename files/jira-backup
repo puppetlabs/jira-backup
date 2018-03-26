@@ -25,19 +25,19 @@ function setup() {
 
 function remove_old_files() {
     if [ -n "${KEEP_DAYS}" ]; then
-        find "$1" -mtime +${KEEP_DAYS} -delete
+        find $1 -mtime +${KEEP_DAYS} -delete -print
     fi
 }
 
 function remove_old_attachment_backups() {
-    if [ -z "${ATTACHMENTS_PATH}" ]; then
+    if [ -n "${ATTACHMENTS_PATH}" ]; then
         echo "Removing old Jira attachment backups"
         remove_old_files "$ATTACHMENT_BACKUP_REMOVE"
     fi
 }
 
 function remove_old_database_dumps() {
-    if [ -z "$DB_NAME" ]; then
+    if [ -n "$DB_NAME" ]; then
         echo "Removing old Jira database dumps"
         remove_old_files "$DATABASE_DUMP_REMOVE"
     fi
@@ -49,7 +49,10 @@ function backup_attachments() {
         echo "Skipping Jira attachments backup"
     else
 	    echo "Backing up Jira attachments"
-        /bin/tar -cpf ${ATTACHMENT_BACKUP_OUTPUT} ${ATTACHMENTS_PATH}
+        # In order suppress "/bin/tar: Removing leading `/' from member names" warning
+        # -C / parameter added and leading / removed from ATTACHMENTS_PATH
+        # See details : https://unix.stackexchange.com/a/61760
+        /bin/tar -cpf ${ATTACHMENT_BACKUP_OUTPUT} -C / ${ATTACHMENTS_PATH}
         echo "Created ${ATTACHMENT_BACKUP_OUTPUT}"
     fi
 }
