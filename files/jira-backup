@@ -62,7 +62,9 @@ function dump_database() {
         echo "Skiping Jira database dump."
     else
         echo "Dumping Jira database"
-        /usr/bin/pg_dump -U "${DB_USER}" "${DB_NAME}" -h "${DB_HOST}" > "${DATABASE_DUMP_OUTPUT}"
+        # Don't pass hostname and username since we'll run this postgres user in local machine
+        # /usr/bin/pg_dump -U "${DB_USER}" "${DB_NAME}" -h "${DB_HOST}" > "${DATABASE_DUMP_OUTPUT}"
+        /usr/bin/pg_dump  "${DB_NAME}"  > "${DATABASE_DUMP_OUTPUT}"
         echo "Created ${DATABASE_DUMP_OUTPUT}"
     fi
 }
