@@ -12,8 +12,8 @@ fi
 
 ATTACHMENT_BACKUP_OUTPUT="${BACKUP_DIR}/jira-attachments-${TIMESTAMP}.tar"
 ATTACHMENT_BACKUP_REMOVE="${BACKUP_DIR}/jira-attachments-*.tar"
-DATABASE_DUMP_OUTPUT="${BACKUP_DIR}/jira-database-dump-${TIMESTAMP}.sql"
-DATABASE_DUMP_REMOVE="${BACKUP_DIR}/jira-database-dump-*.sql"
+DATABASE_DUMP_OUTPUT="${BACKUP_DIR}/jira-database-dump-${TIMESTAMP}.dump"
+DATABASE_DUMP_REMOVE="${BACKUP_DIR}/jira-database-dump-*.dump"
 
 
 function setup() {
@@ -64,7 +64,7 @@ function dump_database() {
         echo "Dumping Jira database"
         # Don't pass hostname and username since we'll run this postgres user in local machine
         # /usr/bin/pg_dump -U "${DB_USER}" "${DB_NAME}" -h "${DB_HOST}" > "${DATABASE_DUMP_OUTPUT}"
-        /usr/bin/pg_dump  "${DB_NAME}"  > "${DATABASE_DUMP_OUTPUT}"
+        /usr/bin/pg_dump -Fc  "${DB_NAME}"  > "${DATABASE_DUMP_OUTPUT}"
         echo "Created ${DATABASE_DUMP_OUTPUT}"
     fi
 }
