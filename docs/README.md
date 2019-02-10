@@ -44,6 +44,8 @@ Then create the `/etc/jira-backup.conf` file.
     DB_HOST='database hostname'
     DB_USER='jira'
     DB_PASS='databae password'
+    # If you use custom port for Postgresql, change DB_PORT value
+    DB_PORT=5432
 
 
 ## Usage
