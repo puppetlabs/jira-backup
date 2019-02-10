@@ -29,7 +29,7 @@ function backup_attachments() {
 
 function dump_database() {
     echo "Dumping Jira database"
-    /usr/bin/pg_dump -U "${DB_USER}" "${DB_NAME}" -h "${DB_HOST}" > "${DATABASE_DUMP_OUTPUT}"
+    /usr/bin/pg_dump -U "${DB_USER}" "${DB_NAME}" -p "${DB_PORT}" -h "${DB_HOST}" > "${DATABASE_DUMP_OUTPUT}"
     echo "Created ${DATABASE_DUMP_OUTPUT}"
 }
 
