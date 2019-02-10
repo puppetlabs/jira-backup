@@ -16,6 +16,9 @@
 #  db_name: (default 'jira')
 #  Set the postgres database name
 #
+#  db_port: (default '2345')
+# Set the postgres database port
+#
 #  backup_dir: (default '/var/atlassian/backups/jira')
 #  Set the target backup directory for Jira attachments and postgres dumps
 #
@@ -44,6 +47,7 @@ class jirabackup (
   $db_pass,
   $db_user          = 'jira',
   $db_name          = 'jira',
+  $db_port          = '2345',
   $backup_dir       = '/var/atlassian/backups/jira',
   $attachments_path = '/var/atlassian/application-data/jira/data/attachments',
 ){
